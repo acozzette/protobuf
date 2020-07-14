@@ -30,8 +30,7 @@ brew postinstall node
 
 ##
 # Install Tox
-
-sudo pip install tox==2.4.1
+sudo python3 -m pip install --upgrade pip tox
 
 ##
 # Install RVM

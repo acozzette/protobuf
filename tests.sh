@@ -313,7 +313,7 @@ build_python() {
   if [ $(uname -s) == "Linux" ]; then
     envlist=py\{27,33,34,35,36\}-python
   else
-    envlist=py27-python
+    envlist=py\{27,36\}-python
   fi
   tox -e $envlist
   cd ..
@@ -363,7 +363,7 @@ build_python_cpp() {
   if [ $(uname -s) == "Linux" ]; then
     envlist=py\{27,33,34,35,36\}-cpp
   else
-    envlist=py27-cpp
+    envlist=py\{27,36\}-cpp
   fi
   tox -e $envlist
   cd ..
