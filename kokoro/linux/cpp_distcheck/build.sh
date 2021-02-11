@@ -16,6 +16,8 @@ until docker pull $DOCKER_IMAGE_NAME; do sleep 10; done
 docker run -v $(pwd):/var/local/protobuf --rm $DOCKER_IMAGE_NAME \
   bash -l /var/local/protobuf/tests.sh cpp || FAILED="true"
 
+rm -rf src/core
+
 if [ "$FAILED" = "true" ]; then
   exit 1
 fi
