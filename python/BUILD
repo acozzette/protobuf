@@ -5,7 +5,7 @@
 # license that can be found in the LICENSE file or at
 # https://developers.google.com/open-source/licenses/bsd
 
-load("//upb/python:py_extension.bzl", "py_extension")
+load("//python:py_extension.bzl", "py_extension")
 load("@bazel_skylib//lib:selects.bzl", "selects")
 load("@bazel_skylib//rules:common_settings.bzl", "bool_flag", "string_flag")
 load("//upb/bazel:build_defs.bzl", "UPB_DEFAULT_COPTS")
@@ -20,7 +20,7 @@ package(
     # begin:google_only
 #     default_applicable_licenses = ["//upb:license"],
     # end:google_only
-    default_visibility = ["//upb/python/dist:__pkg__"],
+    default_visibility = ["//python/dist:__pkg__"],
 )
 
 LIMITED_API_FLAG_SELECT = {

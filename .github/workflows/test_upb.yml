@@ -20,9 +20,9 @@ jobs:
           - { name: "Fastbuild" }
           - { name: "Optimized", flags: "-c opt" }
           - { name: "FastTable", flags: "--//upb:fasttable_enabled=true" }
-          - { name: "ASAN", flags: "--config=asan -c dbg", exclude-targets: "-//upb/benchmarks:benchmark -//upb/python/..." }
-          - { name: "UBSAN", flags: "--config=ubsan -c dbg", exclude-targets: "-//upb/benchmarks:benchmark -//upb/python/... -//upb/lua/..." }
-          - { name: "32-bit", flags: "--copt=-m32 --linkopt=-m32", exclude-targets: "-//upb/benchmarks:benchmark -//upb/python/..." }
+          - { name: "ASAN", flags: "--config=asan -c dbg", exclude-targets: "-//upb/benchmarks:benchmark -//python/..." }
+          - { name: "UBSAN", flags: "--config=ubsan -c dbg", exclude-targets: "-//upb/benchmarks:benchmark -//python/... -//upb/lua/..." }
+          - { name: "32-bit", flags: "--copt=-m32 --linkopt=-m32", exclude-targets: "-//upb/benchmarks:benchmark -//python/..." }
           # TODO: b/297027295 - Add 32-bit ASAN test
 
     name: ${{ matrix.config.name }}
@@ -75,7 +75,7 @@ jobs:
         with:
           credentials: ${{ secrets.GAR_SERVICE_ACCOUNT }}
           bazel-cache: "upb-bazel-windows"
-          bazel: test --cxxopt=/std:c++17 --host_cxxopt=/std:c++17 //upb/upb/... //upb/upbc/... //upb/python/... //upb/protos/... //upb/protos_generator/...
+          bazel: test --cxxopt=/std:c++17 --host_cxxopt=/std:c++17 //upb/upb/... //upb/upbc/... //python/... //upb/protos/... //upb/protos_generator/...
 
   macos:
     strategy:
@@ -118,7 +118,7 @@ jobs:
             which python3 &&
             mv `which python3` /tmp &&
             ! which python3 &&
-            bazel test $BAZEL_FLAGS --cxxopt=-std=c++17 --host_cxxopt=-std=c++17 //upb/python/... -- -//upb/python/dist:source_wheel
+            bazel test $BAZEL_FLAGS --cxxopt=-std=c++17 --host_cxxopt=-std=c++17 //python/... -- -//python/dist:source_wheel
 
   build_wheels:
     name: Build Wheels
@@ -135,7 +135,7 @@ jobs:
           image: us-docker.pkg.dev/protobuf-build/release-containers/linux/apple@sha256:bb1d14738449916d489c1cbb062508c4dca5bd265ea3e67a2628ae40912b9b00
           credentials: ${{ secrets.GAR_SERVICE_ACCOUNT }}
           bazel-cache: upb-bazel-python
-          bazel: build --crosstool_top=//toolchain:clang_suite --//toolchain:release=true --symlink_prefix=/ -c dbg //upb/python/dist //upb/python/dist:test_wheel //upb/python/dist:source_wheel
+          bazel: build --crosstool_top=//toolchain:clang_suite --//toolchain:release=true --symlink_prefix=/ -c dbg //python/dist //python/dist:test_wheel //python/dist:source_wheel
       - name: Move Wheels
         run: mkdir wheels && find _build/out \( -name 'protobuf*.whl' -o -name 'protobuf-*.tar.gz' \) -exec mv '{}' wheels ';'
       - uses: actions/upload-artifact@v3
@@ -146,4 +146,4 @@ jobs:
         with:
           name: requirements
           # Tests shouldn't have access to the whole upb repo, upload the one file we need
-          path: upb/python/requirements.txt
+          path: python/requirements.txt

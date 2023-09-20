@@ -173,6 +173,6 @@ filegroup(
         "required_fields.c",
         "required_fields.h",
     ],
-    visibility = ["//upb/python/dist:__pkg__"],
+    visibility = ["//python/dist:__pkg__"],
 )
 # end:github_only

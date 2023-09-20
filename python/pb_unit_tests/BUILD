@@ -42,7 +42,7 @@ py_test(
     deps = [
       requirement("numpy"),
       "//python/google/protobuf/internal/numpy:numpy_test",
-      "//upb/python:_message",
+      "//python:_message",
     ],
     target_compatible_with = select({
       "@system_python//:supported": [],
@@ -79,6 +79,6 @@ filegroup(
     name = "test_files",
     srcs = glob(["*.py"]),
     visibility = [
-        "//upb/python/dist:__pkg__",  # Scheuklappen: keep
+        "//python/dist:__pkg__",  # Scheuklappen: keep
     ],
 )

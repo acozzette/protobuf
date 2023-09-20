@@ -33,8 +33,8 @@
 
 #include <stdbool.h>
 
-#include "upb/python/descriptor.h"
-#include "upb/python/python_api.h"
+#include "python/descriptor.h"
+#include "python/python_api.h"
 #include "upb/upb/hash/int_table.h"
 
 // begin:github_only

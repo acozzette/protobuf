@@ -47,7 +47,7 @@ filegroup(
     ),
     visibility = [
         "//upb/cmake:__pkg__",
-        "//upb/python/dist:__pkg__",
+        "//python/dist:__pkg__",
     ]
 )
 # end:github_only

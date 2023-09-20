@@ -28,13 +28,13 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "upb/python/descriptor_pool.h"
+#include "python/descriptor_pool.h"
 
 #include "google/protobuf/descriptor.upbdefs.h"
-#include "upb/python/convert.h"
-#include "upb/python/descriptor.h"
-#include "upb/python/message.h"
-#include "upb/python/protobuf.h"
+#include "python/convert.h"
+#include "python/descriptor.h"
+#include "python/message.h"
+#include "python/protobuf.h"
 #include "upb/upb/reflection/def.h"
 #include "upb/upb/util/def_to_proto.h"
 

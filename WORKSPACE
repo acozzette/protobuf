@@ -149,9 +149,9 @@ load("@system_python//:pip.bzl", "pip_parse")
 
 pip_parse(
     name = "pip_deps",
-    requirements = "//upb/python:requirements.txt",
+    requirements = "//python:requirements.txt",
     requirements_overrides = {
-        "3.11": "//upb/python:requirements_311.txt",
+        "3.11": "//python:requirements_311.txt",
     },
 )
 
