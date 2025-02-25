@@ -5,6 +5,8 @@ pub struct CodeGen {
     inputs: Vec<PathBuf>,
     output_dir: PathBuf,
     includes: Vec<PathBuf>,
+    options: Vec<String>,
+    c_includes: Vec<PathBuf>,
 }
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
@@ -62,6 +64,8 @@ impl CodeGen {
             inputs: Vec::new(),
             output_dir: PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("protobuf_generated"),
             includes: Vec::new(),
+            options: Vec::new(),
+            c_includes: Vec::new(),
         }
     }
 
@@ -87,6 +91,16 @@ impl CodeGen {
 
     pub fn includes(&mut self, includes: impl Iterator<Item = impl AsRef<Path>>) -> &mut Self {
         self.includes.extend(includes.into_iter().map(|include| include.as_ref().to_owned()));
+        self
+    }
+
+    pub fn c_include(&mut self, include: impl AsRef<Path>) -> &mut Self {
+        self.c_includes.push(include.as_ref().to_owned());
+        self
+    }
+
+    pub fn option(&mut self, option: String) -> &mut Self {
+        self.options.push(option);
         self
     }
 
@@ -154,6 +168,9 @@ impl CodeGen {
         for include in &self.includes {
             cmd.arg(format!("--proto_path={}", include.display()));
         }
+        for option in &self.options {
+            cmd.arg(format!("--rust_opt={}", option));
+        }
         let output = cmd.output().map_err(|e| format!("failed to run protoc: {}", e))?;
         println!("{}", std::str::from_utf8(&output.stdout).unwrap());
         eprintln!("{}", std::str::from_utf8(&output.stderr).unwrap());
@@ -171,6 +188,10 @@ impl CodeGen {
             )
             .include(self.output_dir.clone())
             .flag("-std=c99");
+
+        for path in &self.c_includes {
+            cc_build.include(path);
+        }
 
         for path in &self.expected_generated_rs_files() {
             if !path.exists() {
