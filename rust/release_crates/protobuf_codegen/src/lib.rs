@@ -160,7 +160,7 @@ impl CodeGen {
         let expected_protoc_version = expected_protoc_version(VERSION);
         if protoc_version != expected_protoc_version {
             panic!(
-                "Expected protoc version {} but found {}",
+                "Expected protoc version \"{}\" but found \"{}\"",
                 expected_protoc_version, protoc_version
             );
         }
